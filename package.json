@@ -1,0 +1,29 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "A project created with plain HTML, CSS, JS Modules and Webpack.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khs-kks/todo-list.git"
+  },
+  "author": "KHS",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/khs-kks/todo-list/issues"
+  },
+  "homepage": "https://github.com/khs-kks/todo-list/blob/main/README.md",
+  "devDependencies": {
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
