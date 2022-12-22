@@ -1,3 +1,3 @@
 # todo-list
 
-Project is written in vanilla HTML, CSS, and JS.
+A Project written in vanilla HTML, CSS, and JS.
