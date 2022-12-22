@@ -64,6 +64,100 @@ body {
 
 .main-left {
     background-color: var(--secondary-light);
+    padding: var(--spacing-lg);
+}
+
+.main-left-upper {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+button.today,
+button.this-week,
+button.add-project {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-color: inherit;
+    /* outline: none; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.main-left-lower {
+    margin-top: var(--spacing-lg);
+    font-size: 1rem;
+}
+
+.lower-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+span.plus {
+    font-size: 2rem;
+}
+
+span.divider {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+button.projects {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-color: inherit;
+    /* outline: none; */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    justify-content: space-between;
+}
+
+.main-left button:hover {
+    background-color: #ccc;
+}
+
+/* MAIN RIGHT  */
+/* EMPTY PROJECT  */
+.empty-project {
+    text-align: center;
+}
+
+.empty-project p {
+    font-size: 1.5rem;
+}
+
+button.delete-project,
+button.add-todo {
+    padding: var(--spacing-md);
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.delete-project:hover,
+button.add-todo:hover {
+    background-color: var(--secondary-light);
+    color: var(--secondary-dark);
+}
+
+div.empty-project-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
 }
 
 /* FOOTER  */
