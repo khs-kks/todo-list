@@ -160,6 +160,40 @@ div.empty-project-buttons {
     gap: var(--spacing-lg);
 }
 
+/* NON-EMPTY PROJECT  */
+
+.project-title {
+    text-align: center;
+}
+
+.tasks-container {
+    display: grid;
+    grid-template-rows: repeat(auto-fill, 60px);
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+    align-items: center;
+    gap: var(--spacing-md);
+
+}
+
+.tasks-header {
+    border-bottom: solid 1px var(--secondary-dark);
+}
+
+.tasks-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.add-a-task {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+
 /* FOOTER  */
 .footer {
     background-color: var(--primary-dark);
