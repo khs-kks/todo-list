@@ -7,7 +7,7 @@
     --light-green: #9fff9c;
     --light-red: #ff9c9c;
     --neutral: #fafafa;
-    --border-radius: 8px;
+    --border-radius: 5px;
     --spacing-xs: 5px;
     --spacing-sm: 10px;
     --spacing-md: 15px;
@@ -29,6 +29,10 @@ body {
     color: var(--primary-dark);
     display: grid;
     grid-template-rows: 1fr 5fr 0.5fr;
+}
+
+button {
+    border-radius: var(--border-radius);
 }
 
 /* HEADER  */
@@ -265,4 +269,84 @@ button.todo-details {
 
 a {
     color: inherit;
+}
+
+/* ################## MODALS ############# */
+
+/* #############ADD PROJECT MODAL ################ */
+
+.add-project-modal {
+
+    display: block;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    /* filter: blur(8px); */
+}
+
+/* #content {
+    filter: blur(8px);
+} */
+
+.add-project-modal-content {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: var(--spacing-lg);
+    border: 1px solid #888;
+    border-radius: var(--border-radius);
+    width: 40%;
+    /* Could be more or less, depending on screen size */
+
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0.5fr;
+    gap: var(--spacing-md);
+}
+
+h1.add-project-header {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+    border-bottom: solid 2px var(--primary-light);
+}
+
+.add-project-web-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.add-project-web-form>label {
+    font-size: 1.3rem;
+}
+
+.add-project-web-form>input {
+    padding: var(--spacing-sm);
+}
+
+.add-project-modal-buttons {
+    align-self: end;
+    justify-self: end;
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.add-project-modal-buttons>button {
+    padding: var(--spacing-sm);
+    background-color: var(--secondary-light);
+    color: var(--secondary-dark);
 }
