@@ -65,6 +65,7 @@ body {
 .main-left {
     background-color: var(--secondary-light);
     padding: var(--spacing-lg);
+    overflow: auto;
 }
 
 .main-left-upper {
@@ -169,6 +170,7 @@ div.empty-project-buttons {
 .tasks-container {
     display: grid;
     grid-template-rows: repeat(auto-fill, 60px);
+    /* grid-auto-rows: 60px; */
     padding-left: var(--spacing-xl);
     padding-right: var(--spacing-xl);
     align-items: center;
@@ -193,6 +195,62 @@ div.empty-project-buttons {
     gap: var(--spacing-sm);
 }
 
+.regular-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: var(--spacing-md);
+}
+
+.regular-task:hover {
+    background-color: var(--secondary-light);
+    cursor: pointer;
+}
+
+.todo-options-wrapper {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-name-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.todo {
+    height: 20px;
+    width: 20px;
+    border: solid 1px var(--primary-dark);
+}
+
+.todo.completed {
+    background: url(./images/checkbox-marked.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+
+}
+
+button.todo-details {
+    cursor: pointer;
+}
+
+.high-prio {
+    border-left: solid 3px red;
+}
+
+.medium-prio {
+    border-left: solid 3px yellow;
+}
+
+.low-prio {
+    border-left: solid 3px green;
+
+}
 
 /* FOOTER  */
 .footer {
