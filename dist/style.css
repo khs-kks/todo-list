@@ -31,6 +31,10 @@ body {
     grid-template-rows: 1fr 5fr 0.5fr;
 }
 
+.blur-content {
+    filter: blur(8px);
+}
+
 button {
     border-radius: var(--border-radius);
 }
@@ -197,6 +201,7 @@ div.empty-project-buttons {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    cursor: pointer;
 }
 
 .regular-task {
@@ -277,7 +282,7 @@ a {
 
 .add-project-modal {
 
-    display: block;
+    display: none;
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
@@ -298,9 +303,7 @@ a {
     /* filter: blur(8px); */
 }
 
-/* #content {
-    filter: blur(8px);
-} */
+
 
 .add-project-modal-content {
     background-color: var(--primary-dark);
@@ -349,4 +352,99 @@ h1.add-project-header {
     padding: var(--spacing-sm);
     background-color: var(--secondary-light);
     color: var(--secondary-dark);
+}
+
+/* ##########################
+        ADD A TASK MODAL
+########################## */
+
+.add-task-modal {
+
+    display: block;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+
+
+.add-task-modal-content {
+    background-color: var(--primary-dark);
+    color: var(--primary-light);
+    margin: 2% auto;
+    /* 15% from the top and centered */
+    padding: var(--spacing-lg);
+    border: 1px solid #888;
+    border-radius: var(--border-radius);
+    width: max(275px, 40%);
+    /* Could be more or less, depending on screen size */
+
+    display: grid;
+    grid-template-rows: 100px 1fr 100px;
+    gap: var(--spacing-md);
+}
+
+h1.add-task-header {
+    border-bottom: solid 2px var(--primary-light);
+}
+
+.add-task-web-form,
+.add-task-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.add-task-description {
+    margin-top: var(--spacing-md);
+}
+
+.add-task-web-form>label,
+.add-task-description>label,
+.add-task-date>label,
+.add-task-priority>label {
+    font-size: 1.3rem;
+}
+
+.add-task-web-form>input {
+    padding: var(--spacing-sm);
+}
+
+.add-task-description>textarea {
+    resize: vertical;
+}
+
+.add-task-date,
+.add-task-priority {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+}
+
+.add-task-modal-buttons {
+    align-self: end;
+    justify-self: end;
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.add-task-modal-buttons>button {
+    padding: var(--spacing-sm);
+    background-color: var(--secondary-light);
+    color: black;
 }

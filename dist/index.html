@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div id="content">
+    <div id="content" class="blur-content">
         <div class="header">
             <img src="./images/logo.png" alt="Logo" class="logo">
             <div class="product-name">What To Do</div>
@@ -41,18 +41,24 @@
                 </div>
             </nav>
             <div class="main-right">
+                <!-- ############################# -->
                 <!-- Empty Project -->
-                <!-- <div class="empty-project">
+                <!-- ############################# -->
+
+                <div class="empty-project">
                     <h1>Empty Project!</h1>
                     <p>Create a new to-do item or delete the project.</p>
                     <div class="empty-project-buttons">
                         <button class="add-todo">ADD TO-DO</button>
                         <button class="delete-project">DELETE PROJECT</button>
                     </div>
-                </div> -->
+                </div>
 
+                <!-- ############################# -->
                 <!-- Project with a task/tasks  -->
-                <h1 class="project-title">Project's Name</h1>
+                <!-- ############################# -->
+
+                <!-- <h1 class="project-title">Project's Name</h1>
                 <div class="tasks-container">
                     <div class="tasks-header">
                         <div class="tasks-header-wrapper">
@@ -79,8 +85,8 @@
                             <img src="./images/trash-can-outline.svg" alt="Button to delete the task" height="25px">
                         </div>
 
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
             </div>
         </div>
         <div class="footer">
@@ -89,7 +95,10 @@
         </div>
     </div>
 
+    <!-- ############################### -->
     <!-- ADD A MODAL FOR PROJECT CREATE  -->
+    <!-- ############################### -->
+
     <div class="add-project-modal">
 
         <!-- Modal content -->
@@ -108,8 +117,48 @@
                 <button>ADD</button>
             </div>
         </div>
-
     </div>
+
+    <!-- ############################# -->
+    <!-- ADD A MODAL FOR TASK CREATION -->
+    <!-- ############################# -->
+
+    <div class="add-task-modal">
+        <!-- Modal content -->
+        <div class="add-task-modal-content">
+            <h1 class="add-task-header">
+                Add Task
+            </h1>
+            <form action="#">
+                <div class="add-task-web-form">
+                    <label for="task-title-form">Title*</label>
+                    <input type="text" name="task-title-form" id="task-title-form">
+                </div>
+                <div class="add-task-description">
+                    <label for="task-description">Description</label>
+                    <textarea name="task-description" id="task-description" rows="6" maxlength="255"></textarea>
+                </div>
+                <div class="add-task-date">
+                    <label for="task-due-date">Due Date</label>
+                    <input type="date" name="task-due-date" id="task-due-date">
+                </div>
+                <div class="add-task-priority">
+                    <label for="Priority">How important is the task?</label>
+                    <select name="Priority" id="Priority">
+                        <option value="low">Can wait</option>
+                        <option value="medium">Has to be done</option>
+                        <option value="high">Critical</option>
+                    </select>
+                    
+                </div>
+            </form>
+            <div class="add-task-modal-buttons">
+                <button>CANCEL</button>
+                <button>ADD</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
