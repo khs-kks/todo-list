@@ -49,20 +49,20 @@ function updateLeftNav(projectsList) {
 
   //Then Populate the nav with the existing projects
 
-  for (let i = 0; i < projectsList.getProjectsCount(); i += 1) {
+  for (let i = 0; i < AllProjects.getProjectsCount(); i += 1) {
     const btn = document.createElement("button");
     btn.classList.add("projects");
-    btn.setAttribute("data-project", projectsList.getProjectAtIndex(i).name);
+    btn.setAttribute("data-project", AllProjects.getProjectAtIndex(i).name);
     const divider = document.createElement("span");
     divider.classList.add("divider");
 
     divider.innerHTML = `<img src='./images/format-list-checks.png' alt='Image of checklist'>${
-      projectsList.getProjectAtIndex(i).name
+      AllProjects.getProjectAtIndex(i).name
     }`;
 
     const taskCount = document.createElement("span");
     taskCount.classList.add("task-count");
-    taskCount.textContent = projectsList.getProjectAtIndex(i).getTasksCount();
+    taskCount.textContent = AllProjects.getProjectAtIndex(i).getTasksCount();
 
     btn.appendChild(divider);
     btn.appendChild(taskCount);
@@ -124,7 +124,7 @@ function updateRightMainEmptyProject(btn) {
     deleteChildren(mainRight);
   });
 
-  //TODO Add event listeners for add todo project button
+  //Add event listeners for add todo project button
   addButton.addEventListener("click", () => {
     toggleTaskCreationModal(addButton.getAttribute("data-project"));
   });
@@ -184,6 +184,7 @@ function updateRightMainProjectWithTasks(btn) {
   const projectTitle = document.createElement("h1");
   projectTitle.classList.add("project-title");
   projectTitle.textContent = btn.getAttribute("data-project");
+  // projectTitle.textContent = btn;
 
   const tasksContainer = document.createElement("div");
   tasksContainer.classList.add("tasks-container");
@@ -224,6 +225,7 @@ function updateRightMainProjectWithTasks(btn) {
   tasksHeader.appendChild(tasksHeaderWrapper);
 
   tasksContainer.appendChild(tasksHeader);
+  mainRight.appendChild(projectTitle);
   mainRight.appendChild(tasksContainer);
   //TODO: Add the logic to display current tasks
 }

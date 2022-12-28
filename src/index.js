@@ -1,5 +1,6 @@
 import Project from "./class-project";
 import AllProjects from "./class-projects-holder";
+import Task from "./class-task";
 import addProject from "./DOM-add-project";
 
 const testProject = new Project("Kriskata se uchi");
@@ -18,6 +19,7 @@ AllProjects.deleteProject("proba1");
 console.log(AllProjects.getProjects());
 
 addProject(AllProjects);
+
 
 
 
