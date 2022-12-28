@@ -303,7 +303,9 @@ a {
     /* filter: blur(8px); */
 }
 
-
+.add-project-modal-visible {
+    display: block;
+}
 
 .add-project-modal-content {
     background-color: var(--primary-dark);
@@ -455,7 +457,7 @@ h1.add-task-header {
 
 .task-details-modal {
 
-    display: block;
+    display: none;
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
