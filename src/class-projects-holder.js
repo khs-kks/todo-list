@@ -16,11 +16,12 @@ export default class AllProjects {
   }
 
   static getProjectByName(projectName) {
-    for(let i = 0; i < this.getProjectsCount(); i+=1) {
+    for(let i = 0; i < this.getProjectsCount(); i++) {
         if (this.getProjects()[i].name === projectName) {
             return this.projects[i];
         }
     }
+    return
   }
 
   static appendNewProject(Project) {

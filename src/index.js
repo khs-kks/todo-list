@@ -3,22 +3,15 @@ import AllProjects from "./class-projects-holder";
 import Task from "./class-task";
 import addProject from "./DOM-add-project";
 
-const testProject = new Project("Kriskata se uchi");
-const test2 = new Project("Proba");
-
-AllProjects.appendNewProject(test2);
-AllProjects.appendNewProject(testProject);
-console.log(AllProjects.getProjects());
-
-console.log("After filtering: ")
-
-AllProjects.deleteProject(test2.name);
-console.log(AllProjects.getProjects());
-
-AllProjects.deleteProject("proba1");
-console.log(AllProjects.getProjects());
-
 addProject(AllProjects);
+const footer = document.querySelector(".footer");
+
+footer.addEventListener("click", () => {
+    const someTask = new Task("Proba", "low", "Some stupid shit", "30.11.2022");
+    const proj = new Project("Ludnichka");
+    proj.addNewTask(someTask);
+    console.log(proj.getTasks());
+})
 
 
 

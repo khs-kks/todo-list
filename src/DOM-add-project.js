@@ -18,7 +18,7 @@ export default function addProject(projectsList) {
       );
       projectsList.appendNewProject(creatingProject);
       toggleProjectCreationModal();
-      updateLeftNav(projectsList);
+      updateLeftNav();
     } else {
       alert("Title cannot be empty!");
     }
@@ -26,7 +26,7 @@ export default function addProject(projectsList) {
 
   closeButton.addEventListener("click", () => {
     toggleProjectCreationModal();
-    updateLeftNav(projectsList);
+    updateLeftNav();
   });
 }
 
@@ -38,7 +38,7 @@ function toggleProjectCreationModal() {
     .classList.toggle("add-project-modal-visible");
 }
 
-function updateLeftNav(projectsList) {
+function updateLeftNav() {
   //First delete every project but the + Add project button
   let projectsDisplay = document.querySelector(".lower-buttons");
   let addButton = document.querySelector(".add-project");
@@ -49,7 +49,7 @@ function updateLeftNav(projectsList) {
 
   //Then Populate the nav with the existing projects
 
-  for (let i = 0; i < AllProjects.getProjectsCount(); i += 1) {
+  for (let i = 0; i < AllProjects.getProjectsCount(); i++) {
     const btn = document.createElement("button");
     btn.classList.add("projects");
     btn.setAttribute("data-project", AllProjects.getProjectAtIndex(i).name);
@@ -73,6 +73,7 @@ function updateLeftNav(projectsList) {
     btn.addEventListener("click", () => {
       const buttons = Array.from(document.querySelectorAll(".projects"));
 
+      //Switch the highlighted project
       buttons.forEach((button) => {
         if (button.classList.contains("projects-active")) {
           button.classList.toggle("projects-active");
@@ -80,18 +81,16 @@ function updateLeftNav(projectsList) {
       });
 
       btn.classList.add("projects-active");
-      if (projectsList.getProjectAtIndex(i).getTasksCount() === 0) {
-        updateRightMainEmptyProject(btn);
+      if (AllProjects.getProjectAtIndex(i).getTasksCount() === 0) {
+        updateRightMainEmptyProject(AllProjects.getProjectAtIndex(i).name);
       } else {
-        updateRightMainProjectWithTasks(btn);
+        updateRightMainProjectWithTasks(AllProjects.getProjectAtIndex(i).name);
       }
     });
   }
-
-  //Add different outlook for active button
 }
 
-function updateRightMainEmptyProject(btn) {
+function updateRightMainEmptyProject(projectName) {
   let mainRight = document.querySelector(".main-right");
 
   deleteChildren(mainRight);
@@ -111,12 +110,12 @@ function updateRightMainEmptyProject(btn) {
   let addButton = document.createElement("button");
   addButton.classList.add("add-todo");
   addButton.textContent = "ADD TO-DO";
-  addButton.setAttribute("data-project", btn.getAttribute("data-project"));
+  addButton.setAttribute("data-project", projectName);
 
   let deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-project");
   deleteButton.textContent = "DELETE PROJECT";
-  deleteButton.setAttribute("data-project", btn.getAttribute("data-project"));
+  deleteButton.setAttribute("data-project", projectName);
 
   divButtons.appendChild(addButton);
   divButtons.appendChild(deleteButton);
@@ -131,7 +130,7 @@ function updateRightMainEmptyProject(btn) {
 
   deleteButton.addEventListener("click", () => {
     AllProjects.deleteProject(deleteButton.getAttribute("data-project"));
-    updateLeftNav(AllProjects);
+    updateLeftNav();
     deleteChildren(mainRight);
   });
 
@@ -153,8 +152,11 @@ function toggleTaskCreationModal(project) {
       .querySelector(".add-task-modal")
       .classList.contains("add-task-modal-visible")
   ) {
-    let buttonCancel = document.querySelector(".add-task-modal-buttons-cancel");
-    let buttonAdd = document.querySelector(".add-task-modal-buttons-add");
+    const buttonCancel = document.querySelector(
+      ".add-task-modal-buttons-cancel"
+    );
+    const buttonAdd = document.querySelector(".add-task-modal-buttons-add");
+    buttonAdd.setAttribute("data-project", project);
 
     buttonCancel.addEventListener("click", () => {
       toggleTaskCreationModal(project);
@@ -177,7 +179,7 @@ function addTaskToProject(projectName) {
   const newTask = new Task(title, prio, description, duedate);
 
   AllProjects.getProjectByName(projectName).addNewTask(newTask);
-  updateLeftNav(AllProjects);
+  updateLeftNav();
 
   toggleTaskCreationModal(projectName);
 }
@@ -188,13 +190,13 @@ function deleteChildren(parent) {
   }
 }
 
-function updateRightMainProjectWithTasks(btn) {
+function updateRightMainProjectWithTasks(projectName) {
   let mainRight = document.querySelector(".main-right");
   deleteChildren(mainRight);
 
   const projectTitle = document.createElement("h1");
   projectTitle.classList.add("project-title");
-  projectTitle.textContent = btn.getAttribute("data-project");
+  projectTitle.textContent = projectName;
   // projectTitle.textContent = btn;
 
   const tasksContainer = document.createElement("div");
@@ -212,7 +214,7 @@ function updateRightMainProjectWithTasks(btn) {
   const spanNumberOfTasks = document.createElement("span");
   spanNumberOfTasks.classList.add("number-of-tasks");
   spanNumberOfTasks.textContent = `(${AllProjects.getProjectByName(
-    btn.getAttribute("data-project")
+    projectName
   ).getTasksCount()})`;
 
   div.appendChild(spanNumberOfTasks);
