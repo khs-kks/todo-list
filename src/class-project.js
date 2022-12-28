@@ -23,4 +23,8 @@ export default class Project {
   getTasksCount() {
     return this.tasks.length;
   }
+
+  addNewTask(task) {
+    this.tasks.push(task);
+  }
 }

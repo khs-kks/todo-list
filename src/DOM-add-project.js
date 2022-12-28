@@ -126,17 +126,49 @@ function updateRightMainEmptyProject(btn) {
 
   //TODO Add event listeners for add todo project button
   addButton.addEventListener("click", () => {
-    toggleTaskCreationModal();
+    toggleTaskCreationModal(addButton.getAttribute("data-project"));
   });
 }
 
-function toggleTaskCreationModal() {
+function toggleTaskCreationModal(project) {
   document.querySelector("#task-title-form").value = "";
   document.querySelector("#task-description").value = "";
   document.querySelector("#content").classList.toggle("blur-content");
   document
     .querySelector(".add-task-modal")
     .classList.toggle("add-task-modal-visible");
+  if (
+    document
+      .querySelector(".add-task-modal")
+      .classList.contains("add-task-modal-visible")
+  ) {
+    let buttonCancel = document.querySelector(".add-task-modal-buttons-cancel");
+    let buttonAdd = document.querySelector(".add-task-modal-buttons-add");
+
+    buttonCancel.addEventListener("click", () => {
+      toggleTaskCreationModal(project);
+    });
+
+    buttonAdd.addEventListener("click", () => {
+      addTaskToProject(project);
+    });
+  } else {
+    updateRightMainProjectWithTasks(project);
+  }
+}
+
+function addTaskToProject(projectName) {
+  const title = document.querySelector("#task-title-form").value;
+  const description = document.querySelector("#task-description").value;
+  const prio = document.querySelector("#Priority").value;
+  const duedate = document.querySelector("#task-due-date").value;
+
+  const newTask = new Task(title, prio, description, duedate);
+
+  AllProjects.getProjectByName(projectName).addNewTask(newTask);
+  updateLeftNav(AllProjects);
+
+  toggleTaskCreationModal(projectName);
 }
 
 function deleteChildren(parent) {
@@ -147,6 +179,7 @@ function deleteChildren(parent) {
 
 function updateRightMainProjectWithTasks(btn) {
   let mainRight = document.querySelector(".main-right");
+  deleteChildren(mainRight);
 
   const projectTitle = document.createElement("h1");
   projectTitle.classList.add("project-title");
