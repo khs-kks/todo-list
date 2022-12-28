@@ -136,6 +136,10 @@ button.projects {
     background-color: #ccc;
 }
 
+button.projects-active {
+    background-color: #ccc;
+}
+
 /* MAIN RIGHT  */
 /* EMPTY PROJECT  */
 .empty-project {

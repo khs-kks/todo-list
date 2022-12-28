@@ -71,6 +71,15 @@ function updateLeftNav(projectsList) {
     //Add event listener to each project's button on the left nav bar
 
     btn.addEventListener("click", () => {
+      const buttons = Array.from(document.querySelectorAll(".projects"));
+
+      buttons.forEach((button) => {
+        if (button.classList.contains("projects-active")) {
+          button.classList.toggle("projects-active");
+        }
+      });
+
+      btn.classList.add("projects-active");
       if (projectsList.getProjectAtIndex(i).getTasksCount() === 0) {
         updateRightMainEmptyProject(btn);
       } else {
@@ -78,6 +87,8 @@ function updateLeftNav(projectsList) {
       }
     });
   }
+
+  //Add different outlook for active button
 }
 
 function updateRightMainEmptyProject(btn) {
