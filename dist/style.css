@@ -382,7 +382,9 @@ h1.add-project-header {
     /* Black w/ opacity */
 }
 
-
+.add-task-modal-visible {
+    display: block;
+}
 
 .add-task-modal-content {
     background-color: var(--primary-dark);

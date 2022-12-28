@@ -3,22 +3,21 @@ import AllProjects from "./class-projects-holder";
 import addProject from "./DOM-add-project";
 
 const testProject = new Project("Kriskata se uchi");
-const projectsList = new AllProjects();
 const test2 = new Project("Proba");
 
-projectsList.appendNewProject(test2);
-projectsList.appendNewProject(testProject);
-console.log(projectsList.getProjects());
+AllProjects.appendNewProject(test2);
+AllProjects.appendNewProject(testProject);
+console.log(AllProjects.getProjects());
 
 console.log("After filtering: ")
 
-projectsList.deleteProject(test2.name);
-console.log(projectsList.getProjects());
+AllProjects.deleteProject(test2.name);
+console.log(AllProjects.getProjects());
 
-projectsList.deleteProject("proba1");
-console.log(projectsList.getProjects());
+AllProjects.deleteProject("proba1");
+console.log(AllProjects.getProjects());
 
-addProject(projectsList);
+addProject(AllProjects);
 
 
 

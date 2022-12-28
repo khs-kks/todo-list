@@ -1,4 +1,6 @@
 import Project from "./class-project";
+import AllProjects from "./class-projects-holder";
+import Task from "./class-task";
 
 export default function addProject(projectsList) {
   let addProjectButton = document.querySelector(".add-project");
@@ -50,7 +52,7 @@ function updateLeftNav(projectsList) {
   for (let i = 0; i < projectsList.getProjectsCount(); i += 1) {
     const btn = document.createElement("button");
     btn.classList.add("projects");
-    btn.setAttribute("data-project", projectsList.getProjectAtIndex(i).name)
+    btn.setAttribute("data-project", projectsList.getProjectAtIndex(i).name);
     const divider = document.createElement("span");
     divider.classList.add("divider");
 
@@ -71,6 +73,8 @@ function updateLeftNav(projectsList) {
     btn.addEventListener("click", () => {
       if (projectsList.getProjectAtIndex(i).getTasksCount() === 0) {
         updateRightMainEmptyProject(btn);
+      } else {
+        updateRightMainProjectWithTasks(btn);
       }
     });
   }
@@ -115,12 +119,78 @@ function updateRightMainEmptyProject(btn) {
   //Add event listeners for delete project button
 
   deleteButton.addEventListener("click", () => {
-    //TODO TURN THE HOLDER INTO STATIC CLASS
-  })
+    AllProjects.deleteProject(deleteButton.getAttribute("data-project"));
+    updateLeftNav(AllProjects);
+    deleteChildren(mainRight);
+  });
+
+  //TODO Add event listeners for add todo project button
+  addButton.addEventListener("click", () => {
+    toggleTaskCreationModal();
+  });
+}
+
+function toggleTaskCreationModal() {
+  document.querySelector("#task-title-form").value = "";
+  document.querySelector("#task-description").value = "";
+  document.querySelector("#content").classList.toggle("blur-content");
+  document
+    .querySelector(".add-task-modal")
+    .classList.toggle("add-task-modal-visible");
 }
 
 function deleteChildren(parent) {
   while (parent.lastChild) {
     parent.removeChild(parent.lastChild);
   }
+}
+
+function updateRightMainProjectWithTasks(btn) {
+  let mainRight = document.querySelector(".main-right");
+
+  const projectTitle = document.createElement("h1");
+  projectTitle.classList.add("project-title");
+  projectTitle.textContent = btn.getAttribute("data-project");
+
+  const tasksContainer = document.createElement("div");
+  tasksContainer.classList.add("tasks-container");
+
+  const tasksHeader = document.createElement("div");
+  tasksHeader.classList.add("tasks-header");
+
+  const tasksHeaderWrapper = document.createElement("div");
+  tasksHeaderWrapper.classList.add("tasks-header-wrapper");
+
+  const div = document.createElement("div");
+  div.textContent = "Tasks";
+
+  const spanNumberOfTasks = document.createElement("span");
+  spanNumberOfTasks.classList.add("number-of-tasks");
+  spanNumberOfTasks.textContent = `(${AllProjects.getProjectByName(
+    btn.getAttribute("data-project")
+  ).getTasksCount()})`;
+
+  div.appendChild(spanNumberOfTasks);
+
+  const div2 = document.createElement("div");
+  div2.classList.add("add-a-task");
+
+  const spanPlus = document.createElement("span");
+  spanPlus.classList.add("plus");
+  spanPlus.textContent = "+";
+
+  const spanAddTask = document.createElement("span");
+  spanAddTask.textContent = "Add a task";
+
+  div2.appendChild(spanPlus);
+  div2.appendChild(spanAddTask);
+
+  tasksHeaderWrapper.appendChild(div);
+  tasksHeaderWrapper.appendChild(div2);
+
+  tasksHeader.appendChild(tasksHeaderWrapper);
+
+  tasksContainer.appendChild(tasksHeader);
+  mainRight.appendChild(tasksContainer);
+  //TODO: Add the logic to display current tasks
 }
