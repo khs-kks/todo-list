@@ -11,6 +11,11 @@ export default class AllProjects {
     return this.projects.length;
   }
 
+  getProjectAtIndex(index) {
+    if (index < this.getProjectsCount()) {
+      return this.projects[index];
+    }
+  }
   appendNewProject(Project) {
     if (Project.name) {
       this.projects.push(Project);

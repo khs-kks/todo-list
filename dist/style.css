@@ -315,7 +315,7 @@ a {
     padding: var(--spacing-lg);
     border: 1px solid #888;
     border-radius: var(--border-radius);
-    width: 40%;
+    width: max(300px, 40%);
     /* Could be more or less, depending on screen size */
 
     display: grid;

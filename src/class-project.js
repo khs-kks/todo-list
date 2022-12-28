@@ -21,6 +21,6 @@ export default class Project {
   }
 
   getTasksCount() {
-    return this.tasks.length();
+    return this.tasks.length;
   }
 }
