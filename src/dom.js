@@ -45,6 +45,11 @@ const addTaskButton = document.querySelector(".add-task");
 const addProjectButton = document.querySelector(".add-project");
 const defaultContainerButton = document.querySelector(".default-project");
 
+//empty project modal
+const okButton = document.querySelector(".ok");
+const deleteProjectButton = document.querySelector("button.delete-project");
+const emptyProjectModal = document.querySelector(".empty-project-modal");
+
 ////////////////////////////
 class DynamicElements {
   static newProjectAdded(projectTitle) {
@@ -60,7 +65,6 @@ class DynamicElements {
   }
 
   static updateLeftNav() {
-
     this.deleteChildren(lowerButtonsMainLeft);
 
     for (let i = 1; i < AllProjects.getProjectsCount(); i++) {
@@ -103,6 +107,7 @@ export default class UI {
 
   //todo gather all static listeners in one function
   static addListeners() {
+    //+ Add Task button
     addTaskButton.addEventListener("click", this.openTaskModal);
     taskModalCancelBtn.addEventListener("click", this.closeTaskModal);
     taskModalSubmitBtn.addEventListener("click", this.submitTask);
@@ -144,11 +149,10 @@ export default class UI {
         newTask
       );
       UI.closeTaskModal();
-    //   console.log(taskAssignToProject.value);
-    //     console.table(
-    //       AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
-    //     );
-
+      //   console.log(taskAssignToProject.value);
+      //     console.table(
+      //       AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
+      //     );
     } else {
       Alert._alert("Title and Due Date are mandatory");
     }
