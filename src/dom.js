@@ -3,7 +3,7 @@ import AllProjects from "./projects-list";
 import Task from "./task";
 
 //query all the modal elements
-
+const content = document.querySelector("#content");
 //new project modal
 const projectModal = document.querySelector(".add-project-modal");
 const projectTitle = document.querySelector("#project-title-form");
@@ -56,6 +56,10 @@ export default class UI {
     // this.addTask();
   }
 
+  static toggleBlur() {
+    content.classList.toggle("blur-content");
+  }
+
   static initDefaultContainer() {
     //create an empty Project and append it to the ProjectsList
     AllProjects.appendNewProject(new Project("default"));
@@ -66,11 +70,17 @@ export default class UI {
     addTaskButton.addEventListener("click", this.openTaskModal);
     taskModalCancelBtn.addEventListener("click", this.closeTaskModal);
     taskModalSubmitBtn.addEventListener("click", this.submitTask);
+
+    //+ Add Project button
+    addProjectButton.addEventListener("click", this.openProjectModal);
+    projectModalCancelBtn.addEventListener("click", this.closeProjectModal);
+    projectModalProceedBtn.addEventListener("click", this.submitProject);
   }
   //Event listeners for the homepage and all of the modals
 
   static closeTaskModal() {
     taskModal.classList.toggle("add-task-modal-visible");
+    UI.toggleBlur();
   }
 
   static openTaskModal() {
@@ -78,13 +88,14 @@ export default class UI {
     //clear first two fields from previously added task
     taskTitle.value = "";
     taskDescription.value = "";
+    UI.toggleBlur();
   }
 
   static submitTask() {
     if (taskDueDate.value && taskTitle.value) {
-      console.log(taskPriority.value);
-      console.log(taskAssignToProject.value);
-      console.log(taskDescription.value);
+      //   console.log(taskPriority.value);
+      //   console.log(taskAssignToProject.value);
+      //   console.log(taskDescription.value);
 
       const newTask = new Task(
         taskTitle.value,
@@ -96,11 +107,29 @@ export default class UI {
         newTask
       );
       UI.closeTaskModal();
-    //   console.table(
-    //     AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
-    //   );
+      //   console.table(
+      //     AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
+      //   );
     } else {
       Alert._alert("Title and Due Date are mandatory");
+    }
+  }
+
+  static openProjectModal() {
+    projectTitle.value = "";
+    projectModal.classList.toggle("add-project-modal-visible");
+    UI.toggleBlur();
+  }
+
+  static closeProjectModal() {
+    projectModal.classList.toggle("add-project-modal-visible");
+    UI.toggleBlur();
+  }
+
+  static submitProject() {
+    if (projectTitle.value) {
+      AllProjects.appendNewProject(new Project(projectTitle.value));
+      UI.closeProjectModal();
     }
   }
 }
