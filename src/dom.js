@@ -1,8 +1,9 @@
-import Project from "./class-project";
-import AllProjects from "./class-projects-holder";
-import Task from "./class-task";
+import Project from "./project";
+import AllProjects from "./projects-list";
+import Task from "./task";
 
-export default function addProject(projectsList) {
+export default function addProject() {
+  console.log("wtf");
   let addProjectButton = document.querySelector(".add-project");
   let closeButton = document.querySelector(".cancel-project-creation");
   let addButton = document.querySelector(".proceed-project-creation");
@@ -16,7 +17,7 @@ export default function addProject(projectsList) {
       const creatingProject = new Project(
         document.querySelector("#project-title-form").value
       );
-      projectsList.appendNewProject(creatingProject);
+      AllProjects.appendNewProject(creatingProject);
       toggleProjectCreationModal();
       updateLeftNav();
     } else {
@@ -136,38 +137,44 @@ function updateRightMainEmptyProject(projectName) {
 
   //Add event listeners for add todo project button
   addButton.addEventListener("click", () => {
+    document.querySelector("#task-title-form").value = "";
+    document.querySelector("#task-description").value = "";
     toggleTaskCreationModal(addButton.getAttribute("data-project"));
   });
 }
 
 function toggleTaskCreationModal(project) {
-  document.querySelector("#task-title-form").value = "";
-  document.querySelector("#task-description").value = "";
   document.querySelector("#content").classList.toggle("blur-content");
   document
     .querySelector(".add-task-modal")
     .classList.toggle("add-task-modal-visible");
-  if (
+  // if (
+  // document
+  //   .querySelector(".add-task-modal")
+  //   .classList.contains("add-task-modal-visible");
+  // ) {
+  const buttonCancel = document.querySelector(".add-task-modal-buttons-cancel");
+  const buttonAdd = document.querySelector(".add-task-modal-buttons-add");
+  buttonAdd.setAttribute("data-project", project);
+
+  buttonCancel.addEventListener("click", () => {
+    document.querySelector("#content").classList.toggle("blur-content");
     document
       .querySelector(".add-task-modal")
-      .classList.contains("add-task-modal-visible")
-  ) {
-    const buttonCancel = document.querySelector(
-      ".add-task-modal-buttons-cancel"
-    );
-    const buttonAdd = document.querySelector(".add-task-modal-buttons-add");
-    buttonAdd.setAttribute("data-project", project);
+      .classList.toggle("add-task-modal-visible");
+  });
 
-    buttonCancel.addEventListener("click", () => {
-      toggleTaskCreationModal(project);
-    });
-
-    buttonAdd.addEventListener("click", () => {
-      addTaskToProject(project);
-    });
-  } else {
+  buttonAdd.addEventListener("click", () => {
+    addTaskToProject(project);
+    document.querySelector("#content").classList.toggle("blur-content");
+    document
+      .querySelector(".add-task-modal")
+      .classList.toggle("add-task-modal-visible");
     updateRightMainProjectWithTasks(project);
-  }
+  });
+  // } else {
+  //
+  // }
 }
 
 function addTaskToProject(projectName) {
@@ -177,11 +184,10 @@ function addTaskToProject(projectName) {
   const duedate = document.querySelector("#task-due-date").value;
 
   const newTask = new Task(title, prio, description, duedate);
-
+  // console.log(projectName);
+  // console.log(AllProjects.getProjectByName(projectName))
   AllProjects.getProjectByName(projectName).addNewTask(newTask);
   updateLeftNav();
-
-  toggleTaskCreationModal(projectName);
 }
 
 function deleteChildren(parent) {

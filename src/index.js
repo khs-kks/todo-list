@@ -1,9 +1,11 @@
-import Project from "./class-project";
-import AllProjects from "./class-projects-holder";
-import Task from "./class-task";
-import addProject from "./DOM-add-project";
+import Project from "./project";
+import AllProjects from "./projects-list";
+import Task from "./task";
+import initDom from "./dom";
 
-addProject(AllProjects);
+initDom();
+
+// addProject(AllProjects);
 const footer = document.querySelector(".footer");
 
 footer.addEventListener("click", () => {

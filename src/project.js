@@ -4,17 +4,17 @@ export default class Project {
     this.tasks = [];
   }
 
-  get name() {
-    return this._name;
-  }
+  // get name() {
+  //   return this._name;
+  // }
 
-  set name(value) {
-    if (value.length < 1) {
-      alert("Project's name cannot be empty.");
-      return;
-    }
-    this._name = value;
-  }
+  // set name(value) {
+  //   if (value.length < 1) {
+  //     alert("Project's name cannot be empty.");
+  //     return;
+  //   }
+  //   this._name = value;
+  // }
 
   getTasks() {
     return this.tasks;
