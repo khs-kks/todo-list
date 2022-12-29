@@ -4,6 +4,8 @@ import Task from "./task";
 
 //query all the modal elements
 const content = document.querySelector("#content");
+const lowerButtonsMainLeft = document.querySelector(".lower-buttons");
+
 //new project modal
 const projectModal = document.querySelector(".add-project-modal");
 const projectTitle = document.querySelector("#project-title-form");
@@ -44,6 +46,40 @@ const addProjectButton = document.querySelector(".add-project");
 const defaultContainerButton = document.querySelector(".default-project");
 
 ////////////////////////////
+class DynamicElements {
+  static newProjectAdded(projectTitle) {
+    this.updateTaskModal(projectTitle);
+    this.updateLeftNav();
+  }
+
+  static updateTaskModal(projectTitle) {
+    const option = document.createElement("option");
+    option.textContent = projectTitle;
+    option.setAttribute("value", projectTitle.toLowerCase());
+    taskAssignToProject.appendChild(option);
+  }
+
+  static updateLeftNav() {
+
+    this.deleteChildren(lowerButtonsMainLeft);
+
+    for (let i = 1; i < AllProjects.getProjectsCount(); i++) {
+      const btn = document.createElement("button");
+      btn.classList.add("projects");
+      btn.innerHTML = `<img src='./images/format-list-checks.png' alt='Image of checklist'>${AllProjects.getProjectAtIndex(
+        i
+      ).getName()}`;
+      lowerButtonsMainLeft.appendChild(btn);
+    }
+  }
+
+  static deleteChildren(parent) {
+    while (parent.lastChild !== addProjectButton) {
+      parent.removeChild(parent.lastChild);
+    }
+  }
+}
+
 class Alert {
   static _alert(msg) {
     alert(msg);
@@ -89,6 +125,7 @@ export default class UI {
     taskTitle.value = "";
     taskDescription.value = "";
     UI.toggleBlur();
+    // console.table(AllProjects.getProjects());
   }
 
   static submitTask() {
@@ -107,9 +144,11 @@ export default class UI {
         newTask
       );
       UI.closeTaskModal();
-      //   console.table(
-      //     AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
-      //   );
+    //   console.log(taskAssignToProject.value);
+    //     console.table(
+    //       AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
+    //     );
+
     } else {
       Alert._alert("Title and Due Date are mandatory");
     }
@@ -130,6 +169,9 @@ export default class UI {
     if (projectTitle.value) {
       AllProjects.appendNewProject(new Project(projectTitle.value));
       UI.closeProjectModal();
+      DynamicElements.newProjectAdded(projectTitle.value);
+    } else {
+      Alert._alert("Title cannot be empty");
     }
   }
 }

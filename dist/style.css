@@ -131,7 +131,7 @@ button.default-project {
     border-radius: 5px;
     cursor: pointer;
     padding: var(--spacing-sm) var(--spacing-lg);
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 
 .main-left button:hover {
