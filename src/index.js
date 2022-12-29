@@ -1,7 +1,7 @@
 import Project from "./project";
 import AllProjects from "./projects-list";
 import Task from "./task";
-import initDom from "./dom";
+import initDom from "./redundant";
 
 initDom();
 
