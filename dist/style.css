@@ -83,6 +83,7 @@ button {
     align-items: flex-start;
 }
 
+button.add-task,
 button.today,
 button.this-week,
 button.add-project {
@@ -424,7 +425,8 @@ h1.add-task-header {
 .add-task-web-form>label,
 .add-task-description>label,
 .add-task-date>label,
-.add-task-priority>label {
+.add-task-priority>label,
+.add-task-to-project>label {
     font-size: 1.3rem;
 }
 
@@ -437,7 +439,8 @@ h1.add-task-header {
 }
 
 .add-task-date,
-.add-task-priority {
+.add-task-priority,
+.add-task-to-project {
     display: flex;
     justify-content: space-between;
     align-items: center;

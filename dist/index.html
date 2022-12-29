@@ -24,6 +24,7 @@
         <div class="main">
             <nav class="main-left">
                 <div class="main-left-upper">
+                    <button class="add-task"><span class="plus">+</span> Add Task</button>
                     <button class="today"><img src="./images/calendar-today.png" alt="Image of today">Today</button>
                     <button class="this-week"><img src="./images/calendar-week.png"
                             alt="Image of one calendar's week">This week</button>
@@ -149,7 +150,12 @@
                         <option value="medium">Has to be done</option>
                         <option value="high">Critical</option>
                     </select>
-
+                </div>
+                <div class="add-task-to-project">
+                    <label for="project-to-add-to">Project</label>
+                    <select name="project-to-add-to" id="project-to-add-to">
+                        <option value="defaul">Default Container</option>
+                    </select>
                 </div>
             </form>
             <div class="add-task-modal-buttons">

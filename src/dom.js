@@ -3,7 +3,7 @@ import AllProjects from "./projects-list";
 import Task from "./task";
 
 export default function addProject() {
-  console.log("wtf");
+
   let addProjectButton = document.querySelector(".add-project");
   let closeButton = document.querySelector(".cancel-project-creation");
   let addButton = document.querySelector(".proceed-project-creation");
