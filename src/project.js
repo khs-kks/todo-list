@@ -15,6 +15,13 @@ export default class Project {
   //   }
   //   this._name = value;
   // }
+  getName() {
+    return this.name;
+  }
+
+  setName(name) {
+    this.name = name;
+  }
 
   getTasks() {
     return this.tasks;
