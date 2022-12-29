@@ -74,6 +74,7 @@ class DynamicElements {
         i
       ).getName()}`;
       lowerButtonsMainLeft.appendChild(btn);
+      btn.addEventListener("click", this.populateProjectDetails);
     }
   }
 
@@ -81,6 +82,30 @@ class DynamicElements {
     while (parent.lastChild !== addProjectButton) {
       parent.removeChild(parent.lastChild);
     }
+  }
+
+  static populateProjectDetails(event) {
+    // console.log(event.target.innerText);
+    //Check to see if project clicked is empty and if it is bring up the modal,
+    // if it isn't populate main right with the project's tasks
+    if (
+      AllProjects.getProjectByName(event.target.innerText).getTasksCount() === 0
+    ) {
+      emptyProjectModal.classList.toggle("empty-project-modal-visible");
+      UI.toggleBlur();
+      deleteProjectButton.setAttribute("data-project", event.target.innerText);
+    }
+  }
+
+  static deleteProjectFromTaskModal() {
+    //querry all the option.values and check to see if they exist in AllProjects or the value is equal to deleteProjectButton.getAttribute("data-project"), if the option isnt there, delete it
+    // deleteProjectButton.getAttribute("data-project");
+    // console.log(deleteProjectButton.getAttribute("data-project"));
+    let value = deleteProjectButton.getAttribute("data-project")
+    const toRemove = document.querySelector(`select > [value="${value}"]`);
+    // console.log(toRemove);
+    toRemove.remove();
+    // .remove();
   }
 }
 
@@ -116,6 +141,10 @@ export default class UI {
     addProjectButton.addEventListener("click", this.openProjectModal);
     projectModalCancelBtn.addEventListener("click", this.closeProjectModal);
     projectModalProceedBtn.addEventListener("click", this.submitProject);
+
+    //Empty Project modal buttons
+    okButton.addEventListener("click", this.closeEmptyProjectModal);
+    deleteProjectButton.addEventListener("click", this.deleteEmptyProject);
   }
   //Event listeners for the homepage and all of the modals
 
@@ -177,5 +206,17 @@ export default class UI {
     } else {
       Alert._alert("Title cannot be empty");
     }
+  }
+
+  static closeEmptyProjectModal() {
+    emptyProjectModal.classList.toggle("empty-project-modal-visible");
+    UI.toggleBlur();
+  }
+
+  static deleteEmptyProject() {
+    AllProjects.deleteProject(deleteProjectButton.getAttribute("data-project"));
+    DynamicElements.updateLeftNav();
+    DynamicElements.deleteProjectFromTaskModal();
+    UI.closeEmptyProjectModal();
   }
 }
