@@ -23,6 +23,10 @@ export default class Project {
     this.name = name;
   }
 
+  getTaskByIndex(index) {
+    return this.tasks[index];
+  }
+
   getTasks() {
     return this.tasks;
   }

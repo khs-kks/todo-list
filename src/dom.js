@@ -5,6 +5,7 @@ import Task from "./task";
 //query all the modal elements
 const content = document.querySelector("#content");
 const lowerButtonsMainLeft = document.querySelector(".lower-buttons");
+const mainRight = document.querySelector(".main-right");
 
 //new project modal
 const projectModal = document.querySelector(".add-project-modal");
@@ -94,6 +95,85 @@ class DynamicElements {
       emptyProjectModal.classList.toggle("empty-project-modal-visible");
       UI.toggleBlur();
       deleteProjectButton.setAttribute("data-project", event.target.innerText);
+    } else {
+      //clear main-right display before rendering the tasks
+
+      while (mainRight.lastChild) {
+        mainRight.removeChild(mainRight.lastChild);
+      }
+
+      //generate the header and summary with number of tasks
+      const header1 = document.createElement("h1");
+      const tasksContainer = document.createElement("div");
+      const tasksHeader = document.createElement("div");
+      const tasksHeaderWrapper = document.createElement("div");
+      const div = document.createElement("div");
+      div.textContent = "Tasks ";
+      const spanNumberOfTasks = document.createElement("span");
+
+      header1.classList.add("project-title");
+      header1.textContent = event.target.innerText;
+
+      tasksContainer.classList.add("tasks-container");
+      tasksHeader.classList.add("tasks-header");
+      tasksHeaderWrapper.classList.add("tasks-header-wrapper");
+      spanNumberOfTasks.classList.add("number-of-tasks");
+      spanNumberOfTasks.textContent = `(${AllProjects.getProjectByName(
+        event.target.innerText
+      ).getTasksCount()})`;
+
+      div.appendChild(spanNumberOfTasks);
+      tasksHeaderWrapper.appendChild(div);
+      tasksHeader.appendChild(tasksHeaderWrapper);
+      tasksContainer.appendChild(tasksHeader);
+
+      mainRight.appendChild(header1);
+      mainRight.appendChild(tasksContainer);
+
+      for (
+        let i = 0;
+        i <
+        AllProjects.getProjectByName(event.target.innerText).getTasksCount();
+        i++
+      ) {
+        console.table(
+          AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(i)
+        );
+        const regularTask = document.createElement("div");
+        regularTask.classList.add("regular-task");
+        regularTask.classList.add(
+          AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(i)
+            .priority
+        );
+        const toDoNameWrapper = document.createElement("div");
+        const toDo = document.createElement("div");
+        const spanTaskName = document.createElement("span");
+
+        spanTaskName.textContent = AllProjects.getProjectByName(
+          event.target.innerText
+        ).getTaskByIndex(i).title;
+        spanTaskName.classList.add("task-name");
+        toDo.classList.add("todo");
+
+        if (
+          AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(i)
+            .isCompleted
+        ) {
+          toDo.classList.add("completed");
+        }
+
+        toDoNameWrapper.appendChild(toDo);
+        toDoNameWrapper.appendChild(spanTaskName);
+        regularTask.appendChild(toDoNameWrapper);
+        // tasksContainer.append(regularTask);
+        //TO FINISH
+        // <div class="todo-options-wrapper">
+        //                     <button class="todo-details">DETAILS</button>
+        //                     <span class="due-date">23.11.2023</span>
+        //                     <img src="./images/pencil-box-outline.svg" alt="Button to edit the task" height="25px">
+        //                     <img src="./images/trash-can-outline.svg" alt="Button to delete the task" height="25px">
+        //                 </div>
+      }
     }
   }
 
@@ -101,7 +181,7 @@ class DynamicElements {
     //querry all the option.values and check to see if they exist in AllProjects or the value is equal to deleteProjectButton.getAttribute("data-project"), if the option isnt there, delete it
     // deleteProjectButton.getAttribute("data-project");
     // console.log(deleteProjectButton.getAttribute("data-project"));
-    let value = deleteProjectButton.getAttribute("data-project")
+    let value = deleteProjectButton.getAttribute("data-project");
     const toRemove = document.querySelector(`select > [value="${value}"]`);
     // console.log(toRemove);
     toRemove.remove();

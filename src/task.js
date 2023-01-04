@@ -4,7 +4,7 @@ export default class Task {
     this.priority = prio;
     this.description = desc;
     this.duedate = duedate;
-    this.completed = false;
+    this.isCompleted = false;
   }
 
   // get name() {

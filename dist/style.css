@@ -257,15 +257,15 @@ button.todo-details {
     cursor: pointer;
 }
 
-.high-prio {
+.high {
     border-left: solid 3px red;
 }
 
-.medium-prio {
+.medium {
     border-left: solid 3px yellow;
 }
 
-.low-prio {
+.low {
     border-left: solid 3px green;
 
 }
