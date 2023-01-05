@@ -146,6 +146,7 @@ class DynamicElements {
             .priority
         );
         const toDoNameWrapper = document.createElement("div");
+        toDoNameWrapper.classList.add("todo-name-wrapper");
         const toDo = document.createElement("div");
         const spanTaskName = document.createElement("span");
 
@@ -165,14 +166,33 @@ class DynamicElements {
         toDoNameWrapper.appendChild(toDo);
         toDoNameWrapper.appendChild(spanTaskName);
         regularTask.appendChild(toDoNameWrapper);
-        // tasksContainer.append(regularTask);
-        //TO FINISH
-        // <div class="todo-options-wrapper">
-        //                     <button class="todo-details">DETAILS</button>
-        //                     <span class="due-date">23.11.2023</span>
-        //                     <img src="./images/pencil-box-outline.svg" alt="Button to edit the task" height="25px">
-        //                     <img src="./images/trash-can-outline.svg" alt="Button to delete the task" height="25px">
-        //                 </div>
+        tasksContainer.append(regularTask);
+
+        const todoOptionsWrapper = document.createElement("div");
+        todoOptionsWrapper.classList.add("todo-options-wrapper");
+        const todoDetails = document.createElement("button");
+        todoDetails.classList.add("todo-details");
+        todoDetails.textContent = "DETAILS";
+        todoOptionsWrapper.appendChild(todoDetails);
+        const spanDueDate = document.createElement("span");
+        spanDueDate.classList.add("due-date");
+        spanDueDate.textContent = AllProjects.getProjectByName(
+          event.target.innerText
+        ).getTaskByIndex(i).duedate;
+        todoOptionsWrapper.appendChild(spanDueDate);
+        const imgEdit = document.createElement("img");
+        imgEdit.setAttribute("src", "./images/pencil-box-outline.svg");
+        imgEdit.setAttribute("alt", "Button to edit the task");
+        imgEdit.setAttribute("height", "25px");
+        todoOptionsWrapper.appendChild(imgEdit);
+        const imgDelete = document.createElement("img");
+        imgDelete.setAttribute("src", "./images/trash-can-outline.svg");
+        imgDelete.setAttribute("alt", "Button to delete the task");
+        imgDelete.setAttribute("height", "25px");
+        todoOptionsWrapper.appendChild(imgDelete);
+        regularTask.appendChild(todoOptionsWrapper);
+
+        //TO FINISH add event listeners for each task's buttons
       }
     }
   }
