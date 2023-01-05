@@ -206,6 +206,10 @@ div.empty-project-buttons {
     font-size: 1.2rem;
 }
 
+.tasks-header-wrapper > img {
+    cursor: pointer;
+}
+
 .add-a-task {
     display: flex;
     align-items: center;

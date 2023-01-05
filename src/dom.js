@@ -110,6 +110,7 @@ class DynamicElements {
       const div = document.createElement("div");
       div.textContent = "Tasks ";
       const spanNumberOfTasks = document.createElement("span");
+      const imgRefresh = document.createElement("img");
 
       header1.classList.add("project-title");
       header1.textContent = event.target.innerText;
@@ -122,8 +123,16 @@ class DynamicElements {
         event.target.innerText
       ).getTasksCount()})`;
 
+      imgRefresh.setAttribute("src", "./images/refresh-circle.svg");
+      imgRefresh.setAttribute("alt", "Image of refresh button");
+      imgRefresh.setAttribute("height", "25px");
+      imgRefresh.addEventListener("click", () => {
+        DynamicElements.populateProjectDetails(event);
+      });
+
       div.appendChild(spanNumberOfTasks);
       tasksHeaderWrapper.appendChild(div);
+      tasksHeaderWrapper.appendChild(imgRefresh);
       tasksHeader.appendChild(tasksHeaderWrapper);
       tasksContainer.appendChild(tasksHeader);
 
