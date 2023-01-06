@@ -32,13 +32,15 @@ const taskModalSubmitBtn = document.querySelector(
 );
 
 //task details modal
+const taskDetailsModal = document.querySelector(".task-details-modal");
+const taskDetailsCloseButton = document.querySelector(".close-task-details");
 const taskDetailsInfo = document.querySelector(".task-details-info");
 const taskDetailsDescription = document.querySelector(
   ".task-details-description"
 );
 const taskDetailsDueDate = document.querySelector(".task-details-duedate");
 const taskDetailsPriority = document.querySelector(".task-details-priority");
-const taskDetailsProject = document.querySelector(".task-details-project");
+const taskDetailsCompleted = document.querySelector(".task-details-project");
 
 //left nav bar static buttons
 
@@ -170,10 +172,12 @@ class DynamicElements {
             .isCompleted
         ) {
           toDo.classList.add("completed");
+          spanTaskName.classList.add("completed");
         }
 
         toDo.addEventListener("click", () => {
           toDo.classList.toggle("completed");
+          spanTaskName.classList.toggle("completed");
           let isTaskCompleted = AllProjects.getProjectByName(
             event.target.innerText
           ).getTaskByIndex(i).isCompleted;
@@ -198,6 +202,40 @@ class DynamicElements {
         const todoDetails = document.createElement("button");
         todoDetails.classList.add("todo-details");
         todoDetails.textContent = "DETAILS";
+
+        todoDetails.addEventListener("click", () => {
+          taskDetailsModal.classList.add("task-details-modal-visible");
+          taskDetailsCloseButton.addEventListener("click", () => {
+            taskDetailsModal.classList.remove("task-details-modal-visible");
+          });
+
+          taskDetailsInfo.textContent = AllProjects.getProjectByName(
+            event.target.innerText
+          ).getTaskByIndex(i).title;
+
+          taskDetailsDescription.textContent = AllProjects.getProjectByName(
+            event.target.innerText
+          ).getTaskByIndex(i).description;
+
+          taskDetailsDueDate.textContent = AllProjects.getProjectByName(
+            event.target.innerText
+          ).getTaskByIndex(i).duedate;
+
+          taskDetailsPriority.textContent = AllProjects.getProjectByName(
+            event.target.innerText
+          ).getTaskByIndex(i).priority;
+
+          if (
+            AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(
+              i
+            ).isCompleted
+          ) {
+            taskDetailsCompleted.textContent = "Completed";
+          } else {
+            taskDetailsCompleted.textContent = "NOT Completed";
+          }
+        });
+
         todoOptionsWrapper.appendChild(todoDetails);
         const spanDueDate = document.createElement("span");
         spanDueDate.classList.add("due-date");

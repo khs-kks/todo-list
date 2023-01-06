@@ -257,6 +257,10 @@ div.empty-project-buttons {
 
 }
 
+.task-name.completed {
+    text-decoration: line-through;
+}
+
 button.todo-details {
     cursor: pointer;
 }
@@ -494,7 +498,9 @@ h1.add-task-header {
     /* Black w/ opacity */
 }
 
-
+.task-details-modal-visible {
+    display: block;
+}
 
 .task-details-modal-content {
     background-color: var(--primary-dark);
