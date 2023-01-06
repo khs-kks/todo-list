@@ -172,6 +172,22 @@ class DynamicElements {
           toDo.classList.add("completed");
         }
 
+        toDo.addEventListener("click", () => {
+          toDo.classList.toggle("completed");
+          let isTaskCompleted = AllProjects.getProjectByName(
+            event.target.innerText
+          ).getTaskByIndex(i).isCompleted;
+          if (isTaskCompleted) {
+            AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(
+              i
+            ).isCompleted = false;
+          } else {
+            AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(
+              i
+            ).isCompleted = true;
+          }
+        });
+
         toDoNameWrapper.appendChild(toDo);
         toDoNameWrapper.appendChild(spanTaskName);
         regularTask.appendChild(toDoNameWrapper);
