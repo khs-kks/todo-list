@@ -53,6 +53,10 @@ const okButton = document.querySelector(".ok");
 const deleteProjectButton = document.querySelector("button.delete-project");
 const emptyProjectModal = document.querySelector(".empty-project-modal");
 
+
+//year in footer
+const footerYear = document.querySelector(".footer span");
+
 ////////////////////////////
 class DynamicElements {
   static newProjectAdded(projectTitle) {
@@ -295,6 +299,7 @@ export default class UI {
   static init() {
     //set the min date to be TODAY
     this.setMinDate();
+    this.updateYearInFooter();
     this.initDefaultContainer();
     this.addListeners();
     // this.addTask();
@@ -307,6 +312,10 @@ export default class UI {
     const day = String(today.getDate()).padStart(2, '0');
     const minDate = year + '-' + month + '-' + day;
     taskDueDate.min = minDate;
+  }
+
+  static updateYearInFooter() {
+    footerYear.textContent = new Date().getFullYear();
   }
 
   static toggleBlur() {
