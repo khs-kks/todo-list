@@ -92,7 +92,9 @@ class DynamicElements {
     //Check to see if project clicked is empty and if it is bring up the modal,
     // if it isn't populate main right with the project's tasks
     if (
-      AllProjects.getProjectByName(event.target.innerText).getTasksCount() === 0
+      AllProjects.getProjectByName(event.target.innerText).getTasksCount() ===
+        0 &&
+      event.target.innerText !== "Default Container"
     ) {
       emptyProjectModal.classList.toggle("empty-project-modal-visible");
       UI.toggleBlur();
@@ -302,7 +304,7 @@ export default class UI {
 
   static initDefaultContainer() {
     //create an empty Project and append it to the ProjectsList
-    AllProjects.appendNewProject(new Project("default"));
+    AllProjects.appendNewProject(new Project("Default Container"));
   }
 
   //todo gather all static listeners in one function
@@ -320,6 +322,9 @@ export default class UI {
     //Empty Project modal buttons
     okButton.addEventListener("click", this.closeEmptyProjectModal);
     deleteProjectButton.addEventListener("click", this.deleteEmptyProject);
+
+    //Default Container button
+    defaultContainerButton.addEventListener("click", this.openDefaultContainer);
   }
   //Event listeners for the homepage and all of the modals
 
@@ -389,9 +394,19 @@ export default class UI {
   }
 
   static deleteEmptyProject() {
-    AllProjects.deleteProject(deleteProjectButton.getAttribute("data-project"));
-    DynamicElements.updateLeftNav();
-    DynamicElements.deleteProjectFromTaskModal();
-    UI.closeEmptyProjectModal();
+    if (
+      deleteProjectButton.getAttribute("data-project") !== "Default Container"
+    ) {
+      AllProjects.deleteProject(
+        deleteProjectButton.getAttribute("data-project")
+      );
+      DynamicElements.updateLeftNav();
+      DynamicElements.deleteProjectFromTaskModal();
+      UI.closeEmptyProjectModal();
+    }
+  }
+
+  static openDefaultContainer(event) {
+      DynamicElements.populateProjectDetails(event);
   }
 }
