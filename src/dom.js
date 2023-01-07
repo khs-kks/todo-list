@@ -293,9 +293,20 @@ class Alert {
 }
 export default class UI {
   static init() {
+    //set the min date to be TODAY
+    this.setMinDate();
     this.initDefaultContainer();
     this.addListeners();
     // this.addTask();
+  }
+
+  static setMinDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const minDate = year + '-' + month + '-' + day;
+    taskDueDate.min = minDate;
   }
 
   static toggleBlur() {
