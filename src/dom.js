@@ -252,6 +252,18 @@ class DynamicElements {
         imgDelete.setAttribute("src", "./images/trash-can-outline.svg");
         imgDelete.setAttribute("alt", "Button to delete the task");
         imgDelete.setAttribute("height", "25px");
+
+        imgDelete.addEventListener("click", () => {
+          AllProjects.getProjectByName(
+            event.target.innerText
+          ).deleteTaskAtIndex(i);
+
+          while (mainRight.lastChild) {
+            mainRight.removeChild(mainRight.lastChild);
+          }
+
+          DynamicElements.populateProjectDetails(event);
+        });
         todoOptionsWrapper.appendChild(imgDelete);
         regularTask.appendChild(todoOptionsWrapper);
 

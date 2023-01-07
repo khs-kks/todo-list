@@ -27,6 +27,10 @@ export default class Project {
     return this.tasks[index];
   }
 
+  deleteTaskAtIndex(index) {
+    this.tasks.splice(index, 1);
+  }
+
   getTasks() {
     return this.tasks;
   }
