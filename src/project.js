@@ -43,6 +43,15 @@ export default class Project {
     this.tasks.push(task);
   }
 
+  taskAlreadyExists(taskName) {
+    for (let i = 0; i < this.tasks.length; i++) {
+      if (this.tasks[i].title === taskName) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   getTodayTasks() {
     const today = new Date();
     const todayString = today.toISOString().slice(0, 10);

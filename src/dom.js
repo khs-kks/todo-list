@@ -376,16 +376,20 @@ export default class UI {
   }
 
   static submitTask() {
-    if (taskDueDate.value && taskTitle.value) {
+
+    let taskExists = AllProjects.getProjectByName(taskAssignToProject.value).taskAlreadyExists(taskTitle.value);
+
+    if (taskDueDate.value && taskTitle.value && !taskExists) {
       //   console.log(taskPriority.value);
-      //   console.log(taskAssignToProject.value);
+        // console.log(taskAssignToProject.value);
       //   console.log(taskDescription.value);
 
       const newTask = new Task(
         taskTitle.value,
         taskPriority.value,
         taskDescription.value,
-        taskDueDate.value
+        taskDueDate.value,
+        taskAssignToProject.value
       );
       AllProjects.getProjectByName(taskAssignToProject.value).addNewTask(
         newTask
@@ -396,7 +400,7 @@ export default class UI {
       //       AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
       //     );
     } else {
-      Alert._alert("Title and Due Date are mandatory");
+      Alert._alert("Title and Due Date are mandatory, and only one unique task's names");
     }
   }
 
