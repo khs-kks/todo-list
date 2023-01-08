@@ -281,23 +281,171 @@ class DynamicElements {
   static openTodayThisWeekTasks(event) {
     // console.log(event.target.innerText)
     if (event.currentTarget.innerText.includes("Today")) {
-      DynamicElements.populateTodayMainRight();
+      DynamicElements.populateTodayOrThisWeekMainRight(
+        AllProjects.getEveryTodayTaskFromEveryProject(),
+        "Today"
+      );
     } else if (event.currentTarget.innerText.includes("This week")) {
-      DynamicElements.populateThisWeekMainRight();
+      // DynamicElements.populateTodayOrThisWeekMainRight(); with every tasks within the current week
+      DynamicElements.populateTodayOrThisWeekMainRight(
+        AllProjects.getEveryThisWeekTaskFromEveryProject(),
+        "This week"
+      );
     }
   }
 
-  static populateTodayMainRight() {
-    if (
-      typeof AllProjects.getEveryTodayTaskFromEveryProject() === "undefined"
-    ) {
-      Alert._alert("ENJOY! NO TASKS FOR TODAY!");
+  static populateTodayOrThisWeekMainRight(allTasks, dayString) {
+    if (typeof allTasks === "undefined") {
+      Alert._alert("ENJOY! NO TASKS IN THE NEAR FUTURE!");
     } else {
       //Start building the page on Main-Right with today's tasks
+      //REMEMBER
+      while (mainRight.lastChild) {
+        mainRight.removeChild(mainRight.lastChild);
+      }
+
+      //generate the header and summary with number of tasks
+      const header1 = document.createElement("h1");
+      const tasksContainer = document.createElement("div");
+      const tasksHeader = document.createElement("div");
+      const tasksHeaderWrapper = document.createElement("div");
+      const div = document.createElement("div");
+      div.textContent = "Tasks ";
+      const spanNumberOfTasks = document.createElement("span");
+      const imgRefresh = document.createElement("img");
+
+      header1.classList.add("project-title");
+      header1.textContent = dayString;
+
+      tasksContainer.classList.add("tasks-container");
+      tasksHeader.classList.add("tasks-header");
+      tasksHeaderWrapper.classList.add("tasks-header-wrapper");
+      spanNumberOfTasks.classList.add("number-of-tasks");
+      spanNumberOfTasks.textContent = `(${allTasks.length})`;
+
+      imgRefresh.setAttribute("src", "./images/refresh-circle.svg");
+      imgRefresh.setAttribute("alt", "Image of refresh button");
+      imgRefresh.setAttribute("height", "25px");
+      imgRefresh.addEventListener("click", () => {
+        DynamicElements.populateTodayOrThisWeekMainRight(allTasks, dayString);
+      });
+
+      div.appendChild(spanNumberOfTasks);
+      tasksHeaderWrapper.appendChild(div);
+      tasksHeaderWrapper.appendChild(imgRefresh);
+      tasksHeader.appendChild(tasksHeaderWrapper);
+      tasksContainer.appendChild(tasksHeader);
+
+      mainRight.appendChild(header1);
+      mainRight.appendChild(tasksContainer);
+
+      for (let i = 0; i < allTasks.length; i++) {
+        const regularTask = document.createElement("div");
+        regularTask.classList.add("regular-task");
+        regularTask.classList.add(allTasks[i].priority);
+        const toDoNameWrapper = document.createElement("div");
+        toDoNameWrapper.classList.add("todo-name-wrapper");
+        const toDo = document.createElement("div");
+        const spanTaskName = document.createElement("span");
+
+        spanTaskName.textContent = allTasks[i].title;
+        spanTaskName.classList.add("task-name");
+        toDo.classList.add("todo");
+
+        if (allTasks[i].isCompleted) {
+          toDo.classList.add("completed");
+          spanTaskName.classList.add("completed");
+        }
+
+        toDo.addEventListener("click", () => {
+          toDo.classList.toggle("completed");
+          spanTaskName.classList.toggle("completed");
+          let isTaskCompleted = allTasks[i].isCompleted;
+          if (isTaskCompleted) {
+            AllProjects.getProjectByName(
+              allTasks[i].belongsToProject
+            ).getTaskByName(allTasks[i].title).isCompleted = false;
+          } else {
+            AllProjects.getProjectByName(
+              allTasks[i].belongsToProject
+            ).getTaskByName(allTasks[i].title).isCompleted = true;
+          }
+        });
+
+        toDoNameWrapper.appendChild(toDo);
+        toDoNameWrapper.appendChild(spanTaskName);
+        regularTask.appendChild(toDoNameWrapper);
+        tasksContainer.append(regularTask);
+
+        const todoOptionsWrapper = document.createElement("div");
+        todoOptionsWrapper.classList.add("todo-options-wrapper");
+        const todoDetails = document.createElement("button");
+        todoDetails.classList.add("todo-details");
+        todoDetails.textContent = "DETAILS";
+
+        todoDetails.addEventListener("click", () => {
+          taskDetailsModal.classList.add("task-details-modal-visible");
+          taskDetailsCloseButton.addEventListener("click", () => {
+            taskDetailsModal.classList.remove("task-details-modal-visible");
+          });
+
+          taskDetailsInfo.textContent = allTasks[i].title;
+
+          taskDetailsDescription.textContent = allTasks[i].description;
+
+          taskDetailsDueDate.textContent = allTasks[i].duedate;
+
+          taskDetailsPriority.textContent = allTasks[i].priority;
+
+          if (
+            AllProjects.getProjectByName(
+              allTasks[i].belongsToProject
+            ).getTaskByName(allTasks[i].title).isCompleted
+          ) {
+            taskDetailsCompleted.textContent = "Completed";
+          } else {
+            taskDetailsCompleted.textContent = "NOT Completed";
+          }
+        });
+
+        todoOptionsWrapper.appendChild(todoDetails);
+        const spanDueDate = document.createElement("span");
+        spanDueDate.classList.add("due-date");
+        spanDueDate.textContent = AllProjects.getProjectByName(
+          allTasks[i].belongsToProject
+        ).getTaskByName(allTasks[i].title).duedate;
+        todoOptionsWrapper.appendChild(spanDueDate);
+        const imgEdit = document.createElement("img");
+        imgEdit.setAttribute("src", "./images/pencil-box-outline.svg");
+        imgEdit.setAttribute("alt", "Button to edit the task");
+        imgEdit.setAttribute("height", "25px");
+        todoOptionsWrapper.appendChild(imgEdit);
+        const imgDelete = document.createElement("img");
+        imgDelete.setAttribute("src", "./images/trash-can-outline.svg");
+        imgDelete.setAttribute("alt", "Button to delete the task");
+        imgDelete.setAttribute("height", "25px");
+
+        imgDelete.addEventListener("click", () => {
+          AllProjects.getProjectByName(
+            allTasks[i].belongsToProject
+          ).deleteTaskByName(allTasks[i].title);
+
+          allTasks.splice(i, 1);
+
+          while (mainRight.lastChild) {
+            mainRight.removeChild(mainRight.lastChild);
+          }
+
+          DynamicElements.populateTodayOrThisWeekMainRight(
+            AllProjects.getEveryTodayTaskFromEveryProject(),
+            dayString
+          );
+        });
+        todoOptionsWrapper.appendChild(imgDelete);
+        regularTask.appendChild(todoOptionsWrapper);
+      }
     }
   }
-
-  static populateThisWeekMainRight() {}
 
   static deleteProjectFromTaskModal() {
     //querry all the option.values and check to see if they exist in AllProjects or the value is equal to deleteProjectButton.getAttribute("data-project"), if the option isnt there, delete it
@@ -368,7 +516,15 @@ export default class UI {
     defaultContainerButton.addEventListener("click", this.openDefaultContainer);
 
     //Today and This Week buttons
-    todayTasksButton.addEventListener("click", DynamicElements.openTodayThisWeekTasks);
+    todayTasksButton.addEventListener(
+      "click",
+      DynamicElements.openTodayThisWeekTasks
+    );
+
+    thisWeekTasksButton.addEventListener(
+      "click",
+      DynamicElements.openTodayThisWeekTasks
+    );
   }
   //Event listeners for the homepage and all of the modals
 

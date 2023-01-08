@@ -54,4 +54,22 @@ export default class AllProjects {
 
     return undefined;
   }
+
+  static getEveryThisWeekTaskFromEveryProject() {
+    let combinedThisWeekTasks = [];
+
+    for (let i = 0; i < this.projects.length; i++) {
+      // console.log(typeof this.projects[i].getTodayTasks())
+      if (typeof this.projects[i].getThisWeekTasks() !== "undefined") {
+        combinedThisWeekTasks = combinedThisWeekTasks.concat(
+          this.projects[i].getThisWeekTasks()
+        );
+      }
+    }
+    if (combinedThisWeekTasks.length > 0) {
+      return combinedThisWeekTasks;
+    }
+
+    return undefined;
+  }
 }
