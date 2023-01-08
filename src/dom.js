@@ -53,9 +53,12 @@ const okButton = document.querySelector(".ok");
 const deleteProjectButton = document.querySelector("button.delete-project");
 const emptyProjectModal = document.querySelector(".empty-project-modal");
 
-
 //year in footer
 const footerYear = document.querySelector(".footer span");
+
+//today and this week buttons
+const todayTasksButton = document.querySelector(".today");
+const thisWeekTasksButton = document.querySelector(".this-week");
 
 ////////////////////////////
 class DynamicElements {
@@ -153,9 +156,7 @@ class DynamicElements {
         AllProjects.getProjectByName(event.target.innerText).getTasksCount();
         i++
       ) {
-        console.table(
-          AllProjects.getProjectByName(event.target.innerText).getTaskByIndex(i)
-        );
+  
         const regularTask = document.createElement("div");
         regularTask.classList.add("regular-task");
         regularTask.classList.add(
@@ -278,6 +279,15 @@ class DynamicElements {
     }
   }
 
+  static openTodayTasks() {
+    
+    if (typeof AllProjects.getEveryTodayTaskFromEveryProject() === "undefined") {
+      Alert._alert("ENJOY! NO TASKS FOR TODAY!");
+    } else {
+      console.log("OPALA");
+    }
+  }
+
   static deleteProjectFromTaskModal() {
     //querry all the option.values and check to see if they exist in AllProjects or the value is equal to deleteProjectButton.getAttribute("data-project"), if the option isnt there, delete it
     // deleteProjectButton.getAttribute("data-project");
@@ -308,9 +318,9 @@ export default class UI {
   static setMinDate() {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const minDate = year + '-' + month + '-' + day;
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    const minDate = year + "-" + month + "-" + day;
     taskDueDate.min = minDate;
   }
 
@@ -345,6 +355,9 @@ export default class UI {
 
     //Default Container button
     defaultContainerButton.addEventListener("click", this.openDefaultContainer);
+
+    //Today and This Week buttons
+    todayTasksButton.addEventListener("click", DynamicElements.openTodayTasks);
   }
   //Event listeners for the homepage and all of the modals
 
@@ -427,6 +440,6 @@ export default class UI {
   }
 
   static openDefaultContainer(event) {
-      DynamicElements.populateProjectDetails(event);
+    DynamicElements.populateProjectDetails(event);
   }
 }

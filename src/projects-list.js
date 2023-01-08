@@ -36,4 +36,22 @@ export default class AllProjects {
       }
     }
   }
+
+  static getEveryTodayTaskFromEveryProject() {
+    let combinedTodayTasks = [];
+
+    for (let i = 0; i < this.projects.length; i++) {
+      console.log(typeof this.projects[i].getTodayTasks())
+      if (typeof this.projects[i].getTodayTasks() !== "undefined") {
+        combinedTodayTasks = combinedTodayTasks.concat(
+          this.projects[i].getTodayTasks()
+        );
+      }
+    }
+    if (combinedTodayTasks.length > 0) {
+      return combinedTodayTasks;
+    }
+
+    return undefined;
+  }
 }

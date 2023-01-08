@@ -51,6 +51,8 @@ export default class Project {
       (task) => task.duedate === todayString
     );
 
-    return allTodayTasks;
+    if (allTodayTasks.length > 0) {
+      return allTodayTasks;
+    }
   }
 }
