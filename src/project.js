@@ -42,4 +42,15 @@ export default class Project {
   addNewTask(task) {
     this.tasks.push(task);
   }
+
+  getTodayTasks() {
+    const today = new Date();
+    const todayString = today.toISOString().slice(0, 10);
+
+    const allTodayTasks = this.tasks.filter(
+      (task) => task.duedate === todayString
+    );
+
+    return allTodayTasks;
+  }
 }
