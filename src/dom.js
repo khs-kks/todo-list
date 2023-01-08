@@ -156,7 +156,6 @@ class DynamicElements {
         AllProjects.getProjectByName(event.target.innerText).getTasksCount();
         i++
       ) {
-  
         const regularTask = document.createElement("div");
         regularTask.classList.add("regular-task");
         regularTask.classList.add(
@@ -279,14 +278,26 @@ class DynamicElements {
     }
   }
 
-  static openTodayTasks() {
-    
-    if (typeof AllProjects.getEveryTodayTaskFromEveryProject() === "undefined") {
-      Alert._alert("ENJOY! NO TASKS FOR TODAY!");
-    } else {
-      console.log("OPALA");
+  static openTodayThisWeekTasks(event) {
+    // console.log(event.target.innerText)
+    if (event.currentTarget.innerText.includes("Today")) {
+      DynamicElements.populateTodayMainRight();
+    } else if (event.currentTarget.innerText.includes("This week")) {
+      DynamicElements.populateThisWeekMainRight();
     }
   }
+
+  static populateTodayMainRight() {
+    if (
+      typeof AllProjects.getEveryTodayTaskFromEveryProject() === "undefined"
+    ) {
+      Alert._alert("ENJOY! NO TASKS FOR TODAY!");
+    } else {
+      //Start building the page on Main-Right with today's tasks
+    }
+  }
+
+  static populateThisWeekMainRight() {}
 
   static deleteProjectFromTaskModal() {
     //querry all the option.values and check to see if they exist in AllProjects or the value is equal to deleteProjectButton.getAttribute("data-project"), if the option isnt there, delete it
@@ -357,7 +368,7 @@ export default class UI {
     defaultContainerButton.addEventListener("click", this.openDefaultContainer);
 
     //Today and This Week buttons
-    todayTasksButton.addEventListener("click", DynamicElements.openTodayTasks);
+    todayTasksButton.addEventListener("click", DynamicElements.openTodayThisWeekTasks);
   }
   //Event listeners for the homepage and all of the modals
 
@@ -376,12 +387,13 @@ export default class UI {
   }
 
   static submitTask() {
-
-    let taskExists = AllProjects.getProjectByName(taskAssignToProject.value).taskAlreadyExists(taskTitle.value);
+    let taskExists = AllProjects.getProjectByName(
+      taskAssignToProject.value
+    ).taskAlreadyExists(taskTitle.value);
 
     if (taskDueDate.value && taskTitle.value && !taskExists) {
       //   console.log(taskPriority.value);
-        // console.log(taskAssignToProject.value);
+      // console.log(taskAssignToProject.value);
       //   console.log(taskDescription.value);
 
       const newTask = new Task(
@@ -400,7 +412,9 @@ export default class UI {
       //       AllProjects.getProjectByName(taskAssignToProject.value).getTasks()
       //     );
     } else {
-      Alert._alert("Title and Due Date are mandatory, and only one unique task's names");
+      Alert._alert(
+        "Title and Due Date are mandatory, and only one unique task's names"
+      );
     }
   }
 
