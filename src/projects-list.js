@@ -72,4 +72,13 @@ export default class AllProjects {
 
     return undefined;
   }
+
+  static isProjectAlreadyAdded(projectname) {
+    for (let i = 0; i < this.projects.length; i++) {
+      if (this.projects[i].name === projectname) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

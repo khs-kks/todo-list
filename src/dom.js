@@ -1,3 +1,4 @@
+import { retrieveLocalStorage, updateLocalStorage } from "./localStorage";
 import Project from "./project";
 import AllProjects from "./projects-list";
 import Task from "./task";
@@ -98,6 +99,7 @@ class DynamicElements {
     // console.log(event.target.innerText);
     //Check to see if project clicked is empty and if it is bring up the modal,
     // if it isn't populate main right with the project's tasks
+    console.log(AllProjects.getProjectByName(event.target.innerText));
     if (
       AllProjects.getProjectByName(event.target.innerText).getTasksCount() ===
         0 &&
@@ -196,6 +198,7 @@ class DynamicElements {
               i
             ).isCompleted = true;
           }
+          updateLocalStorage();
         });
 
         toDoNameWrapper.appendChild(toDo);
@@ -263,6 +266,8 @@ class DynamicElements {
           AllProjects.getProjectByName(
             event.target.innerText
           ).deleteTaskAtIndex(i);
+
+          updateLocalStorage();
 
           while (mainRight.lastChild) {
             mainRight.removeChild(mainRight.lastChild);
@@ -370,6 +375,7 @@ class DynamicElements {
               allTasks[i].belongsToProject
             ).getTaskByName(allTasks[i].title).isCompleted = true;
           }
+          updateLocalStorage();
         });
 
         toDoNameWrapper.appendChild(toDo);
@@ -431,6 +437,7 @@ class DynamicElements {
           ).deleteTaskByName(allTasks[i].title);
 
           allTasks.splice(i, 1);
+          updateLocalStorage();
 
           while (mainRight.lastChild) {
             mainRight.removeChild(mainRight.lastChild);
@@ -466,6 +473,13 @@ class Alert {
 }
 export default class UI {
   static init() {
+    //check if local storage is available on the user's PC
+    if (this.storageAvailable("localStorage")) {
+      // check if localStorage has anything saved
+      if (localStorage.length > 0) {
+        retrieveLocalStorage();
+      }
+    }
     //set the min date to be TODAY
     this.setMinDate();
     this.updateYearInFooter();
@@ -493,7 +507,17 @@ export default class UI {
 
   static initDefaultContainer() {
     //create an empty Project and append it to the ProjectsList
-    AllProjects.appendNewProject(new Project("Default Container"));
+    console.table(AllProjects.getProjects());
+    if (AllProjects.getProjectsCount() === 0) {
+      AllProjects.appendNewProject(new Project("Default Container"));
+      updateLocalStorage();
+    } else {
+      for (let i = 1; i < AllProjects.getProjectsCount(); i++) {
+        DynamicElements.newProjectAdded(
+          AllProjects.getProjectAtIndex(i).getName()
+        );
+      }
+    }
   }
 
   //todo gather all static listeners in one function
@@ -562,6 +586,7 @@ export default class UI {
       AllProjects.getProjectByName(taskAssignToProject.value).addNewTask(
         newTask
       );
+      updateLocalStorage();
       UI.closeTaskModal();
       //   console.log(taskAssignToProject.value);
       //     console.table(
@@ -586,10 +611,19 @@ export default class UI {
   }
 
   static submitProject() {
+    let pTitle = "";
     if (projectTitle.value) {
-      AllProjects.appendNewProject(new Project(projectTitle.value));
-      UI.closeProjectModal();
-      DynamicElements.newProjectAdded(projectTitle.value);
+      pTitle = projectTitle.value.trimStart();
+    }
+    if (pTitle) {
+      if (!AllProjects.isProjectAlreadyAdded(pTitle)) {
+        AllProjects.appendNewProject(new Project(pTitle));
+        updateLocalStorage();
+        UI.closeProjectModal();
+        DynamicElements.newProjectAdded(pTitle);
+      } else {
+        Alert._alert("Project already exists!!!");
+      }
     } else {
       Alert._alert("Title cannot be empty");
     }
@@ -607,6 +641,7 @@ export default class UI {
       AllProjects.deleteProject(
         deleteProjectButton.getAttribute("data-project")
       );
+      updateLocalStorage();
       DynamicElements.updateLeftNav();
       DynamicElements.deleteProjectFromTaskModal();
       UI.closeEmptyProjectModal();
@@ -615,5 +650,32 @@ export default class UI {
 
   static openDefaultContainer(event) {
     DynamicElements.populateProjectDetails(event);
+  }
+
+  static storageAvailable(type) {
+    let storage;
+    try {
+      storage = window[type];
+      const x = "__storage_test__";
+      storage.setItem(x, x);
+      storage.removeItem(x);
+      return true;
+    } catch (e) {
+      return (
+        e instanceof DOMException &&
+        // everything except Firefox
+        (e.code === 22 ||
+          // Firefox
+          e.code === 1014 ||
+          // test name field too, because code might not be present
+          // everything except Firefox
+          e.name === "QuotaExceededError" ||
+          // Firefox
+          e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+        // acknowledge QuotaExceededError only if there's something already stored
+        storage &&
+        storage.length !== 0
+      );
+    }
   }
 }

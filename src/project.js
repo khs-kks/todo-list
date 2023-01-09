@@ -113,4 +113,11 @@ export default class Project {
       return allThisWeekTasks;
     }
   }
+
+  toJSON() {
+    return {
+      name: this.name,
+      tasks: this.tasks,
+    };
+  }
 }
