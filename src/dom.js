@@ -252,11 +252,11 @@ class DynamicElements {
           event.target.innerText
         ).getTaskByIndex(i).duedate;
         todoOptionsWrapper.appendChild(spanDueDate);
-        const imgEdit = document.createElement("img");
-        imgEdit.setAttribute("src", "./images/pencil-box-outline.svg");
-        imgEdit.setAttribute("alt", "Button to edit the task");
-        imgEdit.setAttribute("height", "25px");
-        todoOptionsWrapper.appendChild(imgEdit);
+        // const imgEdit = document.createElement("img");
+        // imgEdit.setAttribute("src", "./images/pencil-box-outline.svg");
+        // imgEdit.setAttribute("alt", "Button to edit the task");
+        // imgEdit.setAttribute("height", "25px");
+        // todoOptionsWrapper.appendChild(imgEdit);
         const imgDelete = document.createElement("img");
         imgDelete.setAttribute("src", "./images/trash-can-outline.svg");
         imgDelete.setAttribute("alt", "Button to delete the task");
@@ -421,11 +421,11 @@ class DynamicElements {
           allTasks[i].belongsToProject
         ).getTaskByName(allTasks[i].title).duedate;
         todoOptionsWrapper.appendChild(spanDueDate);
-        const imgEdit = document.createElement("img");
-        imgEdit.setAttribute("src", "./images/pencil-box-outline.svg");
-        imgEdit.setAttribute("alt", "Button to edit the task");
-        imgEdit.setAttribute("height", "25px");
-        todoOptionsWrapper.appendChild(imgEdit);
+        // const imgEdit = document.createElement("img");
+        // imgEdit.setAttribute("src", "./images/pencil-box-outline.svg");
+        // imgEdit.setAttribute("alt", "Button to edit the task");
+        // imgEdit.setAttribute("height", "25px");
+        // todoOptionsWrapper.appendChild(imgEdit);
         const imgDelete = document.createElement("img");
         imgDelete.setAttribute("src", "./images/trash-can-outline.svg");
         imgDelete.setAttribute("alt", "Button to delete the task");
